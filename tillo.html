@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gymshark - Galería</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#222;color:#fff}
+nav{background:#333}
+nav ul{list-style:none;margin:0;padding:0;display:flex}
+nav li{position:relative}
+nav a{display:block;padding:15px 20px;color:#fff;text-decoration:none}
+nav li:hover{background:#555}
+nav li ul{display:none;position:absolute;top:100%;left:0;background:#444;min-width:180px;padding:0}
+nav li:hover ul{display:block}
+nav li ul li{display:block}
+h1,p{text-align:center}
+.galeria{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
+.galeria img{width:220px;height:170px;object-fit:cover;border-radius:10px;cursor:pointer;transition:.3s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.galeria img:hover{transform:scale(1.05)}
+#visor{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center}
+#imagenGrande{max-width:90%;max-height:90%;border-radius:10px}
+.cerrar,.anterior,.siguiente{position:absolute;color:#fff;cursor:pointer;user-select:none}
+.cerrar{top:20px;right:30px;font-size:42px}
+.anterior{left:20px;top:50%;font-size:50px}
+.siguiente{right:20px;top:50%;font-size:50px}
+</style>
+</head>
+<body>
+
+<nav>
+<ul>
+<li><a href="www.amazon.com">Inicio</a></li>
+<li><a href="#">Productos</a>
+<ul>
+<li><a href="#">Crop Tops</a></li>
+<li><a href="#">Hoodies</a></li>
+<li><a href="#">Leggings</a></li>
+</ul>
+</li>
+<li><a href="#">Contacto</a></li>
+</ul>
+</nav>
+
+<h1>GYMSHARK</h1>
+<p>Haz clic sobre una imagen para verla en tamaño completo.</p>
+
+<div class="galeria">
+
+<img src="oversize.jpeg" onclick="abrir(0)">
+<img src="oversized.jpeg" onclick="abrir(1)">
+<img src="hoodie.jpeg" onclick="abrir(2)">
+<img src="hoodie2.jpeg" onclick="abrir(3)">
+<img src="legging.jpeg" onclick="abrir(4)">
+<img src="legging2.jpeg" onclick="abrir(5)">
+
+</div>
+
+<div id="visor">
+<span class="cerrar" onclick="cerrar()">&times;</span>
+<span class="anterior" onclick="cambiar(-1)">&#10094;</span>
+<img id="imagenGrande" src="" alt="Imagen">
+<span class="siguiente" onclick="cambiar(1)">&#10095;</span>
+</div>
+
+<script>
+let imagenes = [
+"oversize.jpeg",
+"oversized.jpeg",
+"hoodie.jpeg",
+"hoodie2.jpeg",
+"legging.jpeg",
+"legging2.jpeg"
+];
+let actual=0;
+function abrir(i){
+ actual=i;
+ document.getElementById("imagenGrande").src=imagenes[actual];
+ document.getElementById("visor").style.display="flex";
+}
+function cerrar(){document.getElementById("visor").style.display="none";}
+function cambiar(n){
+ actual=(actual+n+imagenes.length)%imagenes.length;
+ document.getElementById("imagenGrande").src=imagenes[actual];
+}
+document.addEventListener("keydown",e=>{
+ if(document.getElementById("visor").style.display==="flex"){
+  if(e.key==="ArrowRight") cambiar(1);
+  if(e.key==="ArrowLeft") cambiar(-1);
+  if(e.key==="Escape") cerrar();
+ }
+});
+document.getElementById("visor").addEventListener("click",e=>{
+ if(e.target.id==="visor") cerrar();
+});
+</script>
+
+</body>
+</html>
